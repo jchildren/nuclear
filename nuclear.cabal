@@ -1,0 +1,72 @@
+-- This file has been generated from package.yaml by hpack version 0.17.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           nuclear
+version:        0.1.0.0
+synopsis:       A language for numerical arrays
+description:    empty
+category:       Language
+homepage:       https://github.com/jchildren/nuclear#readme
+bug-reports:    https://github.com/jchildren/nuclear/issues
+author:         John Children
+maintainer:     john.a.children@gmail.com
+copyright:      2017 John Children
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/jchildren/nuclear
+
+library
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , text
+    , mtl
+    , containers
+    , megaparsec >= 6 && <7
+    , llvm-hs >=4 && <5
+    , llvm-hs-pure >=4 && <5
+  exposed-modules:
+      Language.Nuclear.Codegen
+      Language.Nuclear.Emit
+      Language.Nuclear.Eval
+      Language.Nuclear.Parser
+      Language.Nuclear.Syntax
+  other-modules:
+      Paths_nuclear
+  default-language: Haskell2010
+
+executable nuclear-exe
+  main-is: Main.hs
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base
+    , nuclear
+    , text
+    , mtl
+    , containers
+    , repline
+    , megaparsec
+  default-language: Haskell2010
+
+test-suite nuclear-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base
+    , nuclear
+  default-language: Haskell2010

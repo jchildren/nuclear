@@ -1,0 +1,55 @@
+name: nuclear
+version: '0.1.0.0'
+synopsis: A language for numerical arrays
+description: empty
+category: Language
+author: John Children
+maintainer: john.a.children@gmail.com
+copyright: 2017 John Children
+license: BSD3
+github: jchildren/nuclear
+extra-source-files:
+- README.md
+library:
+  source-dirs: src
+  exposed-modules:
+  - Language.Nuclear.Codegen
+  - Language.Nuclear.Emit
+  - Language.Nuclear.Eval
+  - Language.Nuclear.Parser
+  - Language.Nuclear.Syntax
+  dependencies:
+  - base >=4.7 && <5
+  - text
+  - mtl
+  - containers
+  - megaparsec >= 6 && <7
+  - llvm-hs >=4 && <5
+  - llvm-hs-pure >=4 && <5
+executables:
+  nuclear-exe:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - base
+    - nuclear
+    - text
+    - mtl
+    - containers
+    - repline
+    - megaparsec
+tests:
+  nuclear-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - base
+    - nuclear

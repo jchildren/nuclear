@@ -55,7 +55,7 @@ reserved w = string w *> notFollowedBy alphaNumChar *> sc
 
 {-# INLINE rws #-}
 rws :: [String]
-rws = ["True", "False", "let"]
+rws = ["True", "False", "let", "if", "then", "else"]
 
 {-# INLINE identifier #-}
 identifier :: Parser Name
@@ -87,6 +87,16 @@ lambda = do
   body <- expr
   return $ Lam arg body
 
+ifstmt :: Parser Expr
+ifstmt = do
+  reserved "if"
+  cond <- expr
+  reserved "then"
+  tr <- expr
+  reserved "else"
+  fl <- expr
+  return $ If cond tr fl
+
 term :: Parser Expr
 term =
   aexp >>= \x -> (some aexp >>= \xs -> return (foldl App x xs)) <|> return x
@@ -95,7 +105,8 @@ aexp :: Parser Expr
 aexp =
   parens expr <|> Var <$> identifier <|> lambda <|> Lit . LDouble <$> double <|>
   Lit . LInt <$> integer <|>
-  Lit . LBool <$> boolean
+  Lit . LBool <$> boolean <|>
+  ifstmt
 
 type Binding = (String, Expr)
 

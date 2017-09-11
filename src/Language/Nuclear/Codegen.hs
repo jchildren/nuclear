@@ -218,6 +218,13 @@ fmul a b = instr $ AST.FMul AST.NoFastMathFlags a b []
 fdiv :: AST.Operand -> AST.Operand -> Codegen AST.Operand
 fdiv a b = instr $ AST.FDiv AST.NoFastMathFlags a b []
 
+fcmp ::
+     FP.FloatingPointPredicate
+  -> AST.Operand
+  -> AST.Operand
+  -> Codegen AST.Operand
+fcmp cond a b = instr $ AST.FCmp cond a b []
+
 cons :: C.Constant -> AST.Operand
 cons = AST.ConstantOperand
 
@@ -230,6 +237,9 @@ br val = terminator $ AST.Do $ AST.Br val []
 
 cbr :: AST.Operand -> AST.Name -> AST.Name -> Codegen (AST.Named AST.Terminator)
 cbr cond tr fl = terminator $ AST.Do $ AST.CondBr cond tr fl []
+
+phi :: AST.Type -> [(AST.Operand, AST.Name)] -> Codegen AST.Operand
+phi ty incoming = instr $ AST.Phi ty incoming []
 
 ret :: AST.Operand -> Codegen (AST.Named AST.Terminator)
 ret val = terminator $ AST.Do $ AST.Ret (Just val) []

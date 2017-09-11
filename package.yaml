@@ -21,6 +21,7 @@ library:
   dependencies:
   - base >=4.7 && <5
   - text
+  - bytestring
   - mtl
   - containers
   - megaparsec >= 6 && <7
